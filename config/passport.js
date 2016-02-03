@@ -495,7 +495,9 @@ passport.use(new SoundCloudStrategy({
           req.flash('errors', { msg: 'There is already a SoundCloud account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
           return done(err, user);
         }else {
+
           console.log(profile);
+
           var user = new User();
           user.soundcloud = profile.id;
           user.email = profile.id + '@soundcloud.com'; // steam does not disclose emails, prevent duplicate keys

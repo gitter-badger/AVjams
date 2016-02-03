@@ -867,9 +867,42 @@ exports.postBitGo = function (req, res, next) {
 };
 
 exports.getSoundCloud = function (req, res, next) {
+    var sc = require('node-soundcloud');
     var token = _.find(req.user.tokens, {kind: 'soundcloud'});
 
-    res.render('api/soundcloud', {title: 'Soundcloud API'});
+    sc.init({
+        id: process.env.SOUNDCLOUD_CLIENT_ID,
+        secret: process.env.SOUNDCLOUD_CLIENT_SECRET,
+        uri: process.env.SOUNDCLOUD_REDIRECT_URL,
+        accessToken: token.accessToken
+    });
+    async.parallel({
+        myProfile: function (done) {
+            sc.get('/me', function (err, me) {
+                done(err, me);
+            });
+        },
+        searchTracks: function (done) {
+            sc.get('/tracks/164497989', function (err, track) {
+                done(err, track);
+            });
+        },
+        searchUsers: function(done){
+            sc.get('/users/3207', function(err, user){
+               done(err, user);
+            });
+        }
+    }, function (err, results) {
+        console.log(results.searchTracks);
+        res.render('api/soundcloud',
+            {
+                title: 'Soundcloud API',
+                me: results.myProfile,
+                track: results.searchTracks,
+                searchUser: results.searchUsers
+            }
+        );
+    });
 };
 
 exports.postSoundCloud = function (req, res, next) {

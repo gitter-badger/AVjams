@@ -11,3 +11,26 @@ block content
             i.fa.fa-check-square-o
             | API Overview
 
+    h3
+        i.fa.fa-user
+        |  My Profile
+        | #{me}
+    h3
+        i.fa
+        | Search for track with id #{track.id}
+    img(src=track.waveform_url width="98px")
+    h4=track.title
+    p=track.description
+    p=track.genre
+    p: a(href=track.uri) #{track.title}
+    p Posted by #{track.user.username}
+
+    h3
+        i.fa
+        | Search for user #{searchUser.id}
+    img(src=searchUser.avatar_url)
+    h4=searchUser.username
+    p=searchUser.city
+    p: a(href=searchUser.website) #{searchUser.website_title}
+    p Followers #{searchUser.followers_count}
+

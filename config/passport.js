@@ -11,6 +11,7 @@ var LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 var OpenIDStrategy = require('passport-openid').Strategy;
 var OAuthStrategy = require('passport-oauth').OAuthStrategy;
 var OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
+var SoundCloudStrategy = require('passport-soundcloud').Strategy;
 
 var User = require('../models/User');
 
@@ -480,6 +481,35 @@ passport.use(new OpenIDStrategy({
     });
   });
 }));
+/**
+ * SoundCloud Strategy
+ */
+passport.use(new SoundCloudStrategy({
+      clientID: process.env.SOUNDCLOUD_CLIENT_ID,
+      clientSecret: process.env.SOUNDCLOUD_CLIENT_SECRET,
+      callbackURL: process.env.SOUNDCLOUD_REDIRECT_URL
+    },
+    function(accessToken, refreshToken, profile, done) {
+      User.findOne({ soundcloud: profile.id }, function (err, user) {
+        if(user){
+          req.flash('errors', { msg: 'There is already a SoundCloud account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
+          return done(err, user);
+        }else {
+          console.log(profile);
+          var user = new User();
+          user.soundcloud = profile.id;
+          user.email = profile.id + '@soundcloud.com'; // steam does not disclose emails, prevent duplicate keys
+          user.tokens.push({ kind: 'soundcloud', accessToken: accessToken });
+          user.profile.name = profile._json.full_name || profile._json.username;
+          user.profile.picture = profile._json.avatar;
+          user.profile.website = profile._json.permalink_url;
+          user.save(function(err) {
+            done(err, user);
+          });
+        }
+      });
+    }
+));
 
 /**
  * Login Required middleware.

@@ -13,6 +13,7 @@ var userSchema = new mongoose.Schema({
   instagram: String,
   linkedin: String,
   steam: String,
+  soundcloud: String,
   tokens: Array,
 
   profile: {

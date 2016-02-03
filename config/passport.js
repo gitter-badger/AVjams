@@ -499,6 +499,7 @@ passport.use(new SoundCloudStrategy({
           var user = new User();
           user.soundcloud = profile.id;
           user.email = profile.id + '@soundcloud.com'; // steam does not disclose emails, prevent duplicate keys
+          user.username = profile._json.username;
           user.tokens.push({ kind: 'soundcloud', accessToken: accessToken });
           user.profile.name = profile._json.full_name || profile._json.username;
           user.profile.picture = profile._json.avatar;

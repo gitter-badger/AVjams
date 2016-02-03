@@ -6,10 +6,12 @@ block content
   hr
   .row
     .col-sm-6
-      h2 Heading
-      p
-      p
-        a.btn.btn-default(href='#', role='button') View details »
+      h2 Users
+      a(href="/profile/#{user1.username}"): img(src=user1.profile.picture)
+      p=user1
+      img(src=user2.profile.picture)
+      p=user2
+
     .col-sm-6
       h2 Heading
       p

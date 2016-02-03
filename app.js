@@ -36,6 +36,7 @@ var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 var profileController = require('./controllers/profile');
+var jamroomController = require('./controllers/jamroom');
 
 /**
  * API keys and Passport configuration.
@@ -111,6 +112,7 @@ app.use(express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
  * Primary app routes.
  */
 app.get('/', homeController.index);
+app.get('/about', homeController.about);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
@@ -128,7 +130,7 @@ app.post('/account/password', passportConf.isAuthenticated, userController.postU
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/profile/:username', profileController.getProfile);
-
+app.get('/jamroom', passportConf.isAuthenticated, jamroomController.getJamroom);
 /**
  * API examples routes.
  */
@@ -224,6 +226,7 @@ app.use(errorHandler());
 /**
  * Start Express server.
  */
+
 app.listen(app.get('port'), function () {
     console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
 });

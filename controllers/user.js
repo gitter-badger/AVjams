@@ -113,6 +113,7 @@ exports.postSignup = function (req, res, next) {
                     if (err) {
                         return next(err);
                     }
+                    req.flash('success', {msg: 'Success! Profile created!.'});
                     res.redirect('/');
                 });
             });

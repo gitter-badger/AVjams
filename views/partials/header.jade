@@ -13,10 +13,13 @@
       ul.nav.navbar-nav
         li(class=title=='Home'?'active':undefined)
           a(href='/') Home
-        li(class=title=='API Examples'?'active':undefined)
+        //li(class=title=='API Examples'?'active':undefined)
           a(href='/api') API Examples
+        li(class=title == 'About' ? 'active' : undefined)
+          a(href='/about') About
         li(class=title=='Contact'?'active':undefined)
           a(href='/contact') Contact
+
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=title=='Login'?'active':undefined)
@@ -35,6 +38,8 @@
             ul.dropdown-menu
               li
                 a(href='/account') My Account
+              li
+                a(href='/jamroom') Jamroom
               li.divider
               li
                 a(href='/logout') Logout

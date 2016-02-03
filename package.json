@@ -3,7 +3,7 @@
   "version": "3.4.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sahat/hackathon-starter.git"
+    "url": "https://github.com/tholdreith/avjams.git"
   },
   "scripts": {
     "start": "node app.js",

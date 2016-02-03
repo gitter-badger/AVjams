@@ -3,6 +3,8 @@ extends ../layout
 block content
   .page-header
     h3 Profile Information
+    p
+      a.btn.btn-default(href="/profile/#{user.username}") View Profile
 
   form.form-horizontal(action='/account/profile', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
@@ -11,9 +13,13 @@ block content
       .col-sm-7
         input.form-control(type='email', name='email', id='email', value='#{user.email}')
     .form-group
-      label.col-sm-3.control-label(for='name') Name
+      label.col-sm-3.control-label(for='name') Full Name
       .col-sm-7
         input.form-control(type='text', name='name', id='name', value='#{user.profile.name}')
+    .form-group
+      label.col-sm-3.control-label(for='username') Username
+      .col-sm-7
+        input.form-control(type='text', name='username', id='username', value='#{user.username}')
     .form-group
       label.col-sm-3.control-label(for='gender') Gender
       .col-sm-4

@@ -1,0 +1,10 @@
+//
+   Created by anonsmith on 2/3/2016.
+
+extends layout
+
+block content
+    .col-sm-6
+        h1=profile.profile.name || profile.username || profile._id
+        img(src=profile.profile.picture||user.gravatar())
+        p: a(href=profile.profile.website) #{profile.profile.website}
